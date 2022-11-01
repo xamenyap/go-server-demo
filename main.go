@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -27,10 +29,11 @@ func main() {
 		}
 	}()
 
-	signal := make(chan os.Signal, 1)
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 
 	select {
-	case <-signal:
+	case <-c:
 		log.Println("prepare to shutdown server")
 		ctx, cancelFn := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancelFn()
