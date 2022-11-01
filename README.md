@@ -9,5 +9,5 @@ $ go build -o go-server .
 ```
 Then run the server
 ```sh
-./go-server
+$ ./go-server
 ```
