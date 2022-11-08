@@ -17,9 +17,7 @@ func main() {
 		w.Write([]byte(`hello world`))
 	})
 
-	s := http.Server{
-		Addr: "localhost:8081",
-	}
+	s := http.Server{Addr: "localhost:8081"}
 
 	go func() {
 		if err := s.ListenAndServe(); err != nil {
