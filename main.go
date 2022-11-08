@@ -5,7 +5,6 @@ import (
 	"errors"
 	"log"
 	"net/http"
-	"os"
 	"os/signal"
 	"syscall"
 	"time"
@@ -29,18 +28,18 @@ func main() {
 		}
 	}()
 
-	// create a buffered channel to handle
-	// system signal from host machine.
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
+	// create a context to handle system signal from host machine
+	ctx := context.Background()
+	ctx, stopFn := signal.NotifyContext(ctx, syscall.SIGINT, syscall.SIGTERM)
+	defer stopFn()
 
 	select {
-	case <-c:
+	case <-ctx.Done():
 		log.Println("prepare to shutdown server")
 		// wait 15 seconds for inflight requests to complete
-		ctx, cancelFn := context.WithTimeout(context.Background(), 15*time.Second)
+		shutdownCtx, cancelFn := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancelFn()
-		if err := s.Shutdown(ctx); err != nil {
+		if err := s.Shutdown(shutdownCtx); err != nil {
 			log.Fatal("server shutdown failed:", err)
 		}
 		log.Println("server shutdown completed.")
