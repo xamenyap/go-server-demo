@@ -13,7 +13,6 @@ import (
 
 func main() {
 	http.HandleFunc("/hello", func(w http.ResponseWriter, req *http.Request) {
-		time.Sleep(3 * time.Second)
 		w.Write([]byte(`hello world`))
 	})
 
