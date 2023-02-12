@@ -13,7 +13,8 @@ import (
 
 func main() {
 	http.HandleFunc("/hello", func(w http.ResponseWriter, req *http.Request) {
-		log.Println("request received")
+		log.Println("request received by graceful server")
+		time.Sleep(50 * time.Millisecond)
 		w.Write([]byte(`hello world`))
 	})
 

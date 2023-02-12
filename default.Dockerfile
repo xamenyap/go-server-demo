@@ -1,7 +1,7 @@
 FROM golang:1.16-alpine as builder
 WORKDIR /app/
 COPY ./ ./
-RUN go build -o go-server graceful/main.go
+RUN go build -o go-server default/main.go
 
 FROM alpine:latest
 WORKDIR /root/
