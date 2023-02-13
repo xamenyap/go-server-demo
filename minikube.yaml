@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: graceful
-        image: graceful-go-server
+        image: graceful-go-server:v1.0
         imagePullPolicy: Never
         ports:
         - containerPort: 8081
@@ -50,7 +50,7 @@ spec:
     spec:
       containers:
       - name: default
-        image: default-go-server
+        image: default-go-server:v1.0
         imagePullPolicy: Never
         ports:
         - containerPort: 8081
