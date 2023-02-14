@@ -20,6 +20,18 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 8081
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 3
+          periodSeconds: 3
 ---
 kind: Service
 apiVersion: v1
@@ -54,6 +66,18 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 8081
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 3
+          periodSeconds: 3
 ---
 kind: Service
 apiVersion: v1
